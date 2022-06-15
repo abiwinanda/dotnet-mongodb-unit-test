@@ -16,15 +16,16 @@ You could create an instance of MongoDB database for your unit test with the fol
 ```c#
 public class StudentServiceTest
 {
+    private readonly MongoDbRunner _runner;
     private readonly StudentService _studentService;
     
     public StudentServiceTest()
     {
         // Creating mongodb runner instance 
-        var runner = MongoDbRunner.Start();
+        _runner = MongoDbRunner.Start();
         
         // Use the created mongodb runner to store the database data created in the unit tests
-        MongoContext mongoContext = new MongoContext(runner.ConnectionString);
+        MongoContext mongoContext = new MongoContext(_runner.ConnectionString);
         
         _studentService = new StudentService(mongoContext);
     }
@@ -34,6 +35,11 @@ public class StudentServiceTest
     public void GetAllStudentsByAge_should_get_students_with_correct_age()
     {
         // code here...
+    }
+    
+    public void Dispose()
+    {
+        _runner.Dispose();
     }
 }
 ```
