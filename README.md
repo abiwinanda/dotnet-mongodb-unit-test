@@ -11,7 +11,7 @@ To create a temporary MongoDB instance, this sample project rely on [Mongo2Go Nu
 
 ## Creating MongoDB Instance for Unit Test
 
-You could create an instance of MongoDB database that you could use locally for your unit with the following sample codes
+You could create an instance of MongoDB database for your unit test with the following sample code
 
 ```c#
 public class StudentServiceTest
