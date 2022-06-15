@@ -5,14 +5,15 @@ using SampleMongodbUnitTest.Services;
 
 namespace SampleMongodbUnitTest.Tests;
 
-public class StudentServiceTest
+public class StudentServiceTest : IDisposable
 {
+    private readonly MongoDbRunner _runner;
     private readonly StudentService _studentService;
     
     public StudentServiceTest()
     {
-        var runner = MongoDbRunner.Start();
-        MongoContext mongoContext = new MongoContext(runner.ConnectionString);
+        _runner = MongoDbRunner.Start();
+        MongoContext mongoContext = new MongoContext(_runner.ConnectionString);
         _studentService = new StudentService(mongoContext);
     }
     
@@ -84,5 +85,10 @@ public class StudentServiceTest
         Assert.Single(twenties.ToList());
         Assert.Single(twentyOnes.ToList());
         Assert.Equal(2, twentyTwos.ToList().Count);
+    }
+
+    public void Dispose()
+    {
+        _runner.Dispose();
     }
 }
